@@ -2,13 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
+import { Link } from 'react-router-dom';
 
 export default function JobAdvertisementsList() {
     const [jobAdvertisements, setJobAdvertisements] = useState([]);
     useEffect(() => {
         let jobAdvertisementService = new JobAdvertisementService();
         jobAdvertisementService.getJobAdvertisements().then((result) => setJobAdvertisements(result.data.data))
-    })
+    }, [])
 
     return (
         <div>
@@ -24,21 +25,21 @@ export default function JobAdvertisementsList() {
                     </TableRow>
                 </TableHeader>
 
-                <TableBody>
-                    {
-                        jobAdvertisements.map(jobAdvertisement => (
-                            <TableRow key="{jobAdvertisement.id}">
-                                <TableCell>{jobAdvertisement.job.jobTitle}</TableCell>
-                                <TableCell>{jobAdvertisement.employer.companyName}</TableCell>
-                                <TableCell>{jobAdvertisement.city.cityName}</TableCell>
-                                <TableCell>{jobAdvertisement.description}</TableCell>
-                                <TableCell>{jobAdvertisement.openPositionAmount}</TableCell>
-                                <TableCell>{jobAdvertisement.lastApplicationDate}</TableCell>
-                            </TableRow>
-                        ))
-                    }
+        <TableBody>
+            {
+                jobAdvertisements.map(jobAdvertisement => (
+                    <TableRow key="{jobAdvertisement.id}">
+                        <TableCell><Link to={`/jobadvertisements/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell>
+                        <TableCell>{jobAdvertisement.employer.companyName}</TableCell>
+                        <TableCell>{jobAdvertisement.city.cityName}</TableCell>
+                        <TableCell>{jobAdvertisement.description}</TableCell>
+                        <TableCell>{jobAdvertisement.openPositionAmount}</TableCell>
+                        <TableCell>{jobAdvertisement.lastApplicationDate}</TableCell>
+                    </TableRow>
+                ))
+            }
 
-                </TableBody>
+        </TableBody>
 
                 <TableFooter>
                     <TableRow>
