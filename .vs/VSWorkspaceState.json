@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\layouts",
+    "\\src\\pages",
+    "\\src\\services"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\src\\pages\\JobAdvertisementDetail.jsx",
   "PreviewInSolutionExplorer": false
 }

@@ -2,6 +2,9 @@ import React from "react";
 import CandidatesList from "../pages/CandidatesList";
 import JobAdvertisementsList from "../pages/JobAdvertisementsList";
 import JobAdvertisementDetail from "../pages/JobAdvertisementDetail";
+import UnconfirmedJobAdvertisementsList from "../pages/UnconfirmedJobAdvertisementsList";
+import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
+
 import EmployersList from "../pages/EmployersList";
 import { GridRow, GridColumn, Grid } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
@@ -17,6 +20,8 @@ export default function Dashboard() {
                         <Route exact path="/" component={JobAdvertisementsList} />
                         <Route exact path="/jobadvertisements" component={JobAdvertisementsList} />
                         <Route exact path="/jobadvertisements/:id" component={JobAdvertisementDetail} />
+                        <Route exact path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
+                        <Route exact path="/unconfirmedjobadvertisements/:id" component={ConfirmJobAdvertisement} />
                         <Route exact path="/candidates" component={CandidatesList} />
                         <Route exact path="/employers" component={EmployersList} />
                     </GridColumn>
