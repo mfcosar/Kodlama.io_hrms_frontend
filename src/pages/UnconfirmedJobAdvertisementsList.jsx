@@ -3,7 +3,6 @@ import { useState, useEffect} from 'react';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
 import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
-import { Button } from 'semantic-ui-react';
 
 export default function UnconfirmedJobAdvertisementsList() {
     const [unconfirmedJobAdvertisements, setUnconfirmedJobAdvertisements] = useState([]);
@@ -11,10 +10,8 @@ export default function UnconfirmedJobAdvertisementsList() {
     
       useEffect(() => {
         jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
-      }, [])
-    function handleConfirm() {
-        jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
-    }
+      }, [unconfirmedJobAdvertisements])
+
 return (
         <div>
             <Table celled>
@@ -45,7 +42,8 @@ return (
                         <TableCell>{unconfirmedjobAdvertisement.workingType.workingTypeName}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.openPositionAmount}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.lastApplicationDate}</TableCell>
-                        <TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedjobAdvertisement.id} /></TableCell>
+                        <TableCell><ConfirmJobAdvertisement id={unconfirmedjobAdvertisement.id} /></TableCell>
+                        {/*<TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedjobAdvertisement.id} /></TableCell>*/}
                         {/*<TableCell><Button primary text="Confirm" onClick={() => handleOnClickConfirm()} id={unconfirmedjobAdvertisement.id}  /></TableCell>*/}
                     </TableRow>
                 ))
