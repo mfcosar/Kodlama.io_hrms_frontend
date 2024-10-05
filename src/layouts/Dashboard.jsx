@@ -21,7 +21,6 @@ export default function Dashboard() {
                         <Route exact path="/jobadvertisements" component={JobAdvertisementsList} />
                         <Route exact path="/jobadvertisements/:id" component={JobAdvertisementDetail} />
                         <Route exact path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
-                        <Route exact path="/unconfirmedjobadvertisements/:id" component={ConfirmJobAdvertisement} />
                         <Route exact path="/candidates" component={CandidatesList} />
                         <Route exact path="/employers" component={EmployersList} />
                     </GridColumn>

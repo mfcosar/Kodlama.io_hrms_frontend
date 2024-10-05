@@ -1,18 +1,20 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
-import { Link } from 'react-router-dom';
-
+import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
+import { Button } from 'semantic-ui-react';
 
 export default function UnconfirmedJobAdvertisementsList() {
     const [unconfirmedJobAdvertisements, setUnconfirmedJobAdvertisements] = useState([]);
-
+    let jobAdvertisementService = new JobAdvertisementService();
+    
       useEffect(() => {
-        let jobAdvertisementService = new JobAdvertisementService();
         jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
-    }, [])
-
+      }, [])
+    function handleConfirm() {
+        jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
+    }
 return (
         <div>
             <Table celled>
@@ -26,7 +28,7 @@ return (
                         <TableHeaderCell>Calisma tipi</TableHeaderCell>
                         <TableHeaderCell>Acik Pozisyon Adedi</TableHeaderCell>
                         <TableHeaderCell>Son Basvuru Tarihi</TableHeaderCell>
-
+                        <TableHeaderCell>Onaylama</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
 
@@ -34,7 +36,8 @@ return (
             {
                 unconfirmedJobAdvertisements.map(unconfirmedjobAdvertisement => (
                     <TableRow key="{unconfirmedjobAdvertisement.id}">
-                        <TableCell><Link to={`/unconfirmedjobadvertisements/${unconfirmedjobAdvertisement.id}`}>{unconfirmedjobAdvertisement.job.jobTitle}</Link></TableCell>
+                        {/*<TableCell><Link to={`/unconfirmedjobadvertisements/${unconfirmedjobAdvertisement.id}`}>{unconfirmedjobAdvertisement.job.jobTitle}</Link></TableCell>*/}
+                        <TableCell>{unconfirmedjobAdvertisement.job.jobTitle}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.employer.companyName}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.city.cityName}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.description}</TableCell>
@@ -42,6 +45,8 @@ return (
                         <TableCell>{unconfirmedjobAdvertisement.workingType.workingTypeName}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.openPositionAmount}</TableCell>
                         <TableCell>{unconfirmedjobAdvertisement.lastApplicationDate}</TableCell>
+                        <TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedjobAdvertisement.id} /></TableCell>
+                        {/*<TableCell><Button primary text="Confirm" onClick={() => handleOnClickConfirm()} id={unconfirmedjobAdvertisement.id}  /></TableCell>*/}
                     </TableRow>
                 ))
             }
@@ -50,8 +55,8 @@ return (
 
                 <TableFooter>
                     <TableRow>
-                        <TableHeaderCell colSpan='3'>
-                            <Menu floated='right' pagination>
+                        <TableHeaderCell colSpan='9'>
+                            <Menu floated='left' pagination>
                                 <MenuItem as='a' icon>
                                     <Icon name='chevron left' />
                                 </MenuItem>
