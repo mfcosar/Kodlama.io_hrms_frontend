@@ -5,6 +5,7 @@ import JobAdvertisementService from '../services/jobAdvertisementService';
 import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
 
 export default function UnconfirmedJobAdvertisementsList() {
+
     const [unconfirmedJobAdvertisements, setUnconfirmedJobAdvertisements] = useState([]);
     let jobAdvertisementService = new JobAdvertisementService();
     
