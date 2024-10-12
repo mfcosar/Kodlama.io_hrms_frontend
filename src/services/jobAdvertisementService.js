@@ -6,7 +6,8 @@ export default class JobAdvertisementService {
     }
 
      getJobAdvertisementById(id) {
-        return axios.get("http://localhost:8080/api/jobAdvertisements/getbyid?id="+ id)
+         return axios.get("http://localhost:8080/api/jobAdvertisements/getbyid?id=" + id) //whether make here post?
+         //return axios.get(`http://localhost:8080/api/jobAdvertisements/getbyid/${id}`);
     }
 
      getUnconfirmedJobAdvertisements() {

@@ -20,8 +20,8 @@ export default function Dashboard() {
                     <GridColumn width={12}>
                         <Route exact path="/" component={JobAdvertisementsList} />
                         <Route exact path="/jobadvertisements/add" component={AddJobAdvertisement} /> 
+                        <Route exact path="/jobadvertisements/:id" component={JobAdvertisementDetail} />
                         <Route exact path="/jobadvertisements" component={JobAdvertisementsList} />
-                     {/*<Route exact path="/jobadvertisements/:id" component={JobAdvertisementDetail} />*/}
                         <Route exact path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
                         <Route exact path="/cities/add" component={AddCity} />
                         <Route exact path="/candidates" component={CandidatesList} />
