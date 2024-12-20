@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\common",
+    "\\src\\components",
     "\\src\\layouts",
     "\\src\\pages",
     "\\src\\services"
   ],
-  "SelectedNode": "\\src\\services\\workingTypeService.js",
+  "SelectedNode": "\\src\\layouts\\Navi.jsx",
   "PreviewInSolutionExplorer": false
 }

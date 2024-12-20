@@ -4,7 +4,7 @@ import CityService from '../services/cityService';
 import { Formik, Form, Field, useFormik,  } from 'formik';
 import * as Yup from 'yup';
 import '../App.css'
-export default function AddCity() {
+export default function CityAdd() {
 
     const [cities, setCities] = useState([]);
     
@@ -17,20 +17,20 @@ export default function AddCity() {
     const initialValues = {
         
         city: { id: "1", cityName: "Istanbul" },
-        newCity: { id: "", cityName: ""}
+        newCity: ''
     };
 
     const validationSchema = Yup.object({
         city: Yup.object().shape({
             id: Yup.number().required("Required Field"),
         }),
-        newCity: Yup.object().shape({
-            cityName: Yup.string().min(3, "Enter a city name longer than 2 chars").required("Required Field"),
-        }),
+        newCity: Yup.string().min(3, "Enter a city name longer than 2 chars").required("Sehir ismi giriniz"),
+        
     });
     const onSubmit = async (values, { setSubmitting }) => {
+        let newCityAddition = { id: '', cityName: values.newCity }
 
-            cityService.addCity(values.newCity).then(
+        cityService.addCity(newCityAddition).then(
                 (response) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
@@ -38,7 +38,7 @@ export default function AddCity() {
                     }, 400);
                 },
             );
-            alert("Yeni sehir : " + values.newCity.cityName + " eklendi");
+            alert("Yeni sehir : " + values.newCity + " eklendi");
     };
     const formik = useFormik({
         initialValues: initialValues,
@@ -48,11 +48,10 @@ export default function AddCity() {
     const handleChange = (fieldName, value) => {
 
         formik.setFieldValue(fieldName, value);
-        alert("field : " + fieldName + " value: " + value);
+        //alert("field : " + fieldName + " value: " + value);
     };
 
     const addCity = (fieldName, value) => {
-
         formik.setFieldValue(fieldName, value);
         //alert("field : " + fieldName + " value: " + value);
     };
@@ -82,14 +81,14 @@ export default function AddCity() {
                     <br/>
                     <div>
                         <label htmlFor="newCity">Yeni Sehir Girin </label>
-                        <Field type="text" name="newCity" value={formik.values.newCity.cityName}
+                        <Field type="text" name="newCity" value={formik.values.newCity}
                         onChange={formik.handleChange}
                             onBlur={formik.handleBlur} />
-                            {(formik.touched.newCity?.cityName || "") && (formik.errors.newCity?.cityName || "") && (
-                            <div className="error">{formik.errors.newCity?.cityName || ""}</div>)}
+                            {(formik.touched.newCity || "") && (formik.errors.newCity || "") && (
+                            <div className="error">{formik.errors.newCity || ""}</div>)}
                     </div>
 
-                        <button type="submit" onClick={(event) => addCity("newCity.cityName", formik.values.newCity)}
+                        <button type="submit" onClick={(event) => addCity("newCity", formik.values.newCity)}
                            disabled={isSubmitting}
                     >Add City</button>
                     </Form>

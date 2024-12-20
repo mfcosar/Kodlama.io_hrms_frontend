@@ -32,20 +32,20 @@ return (
 
         <TableBody>
             {
-                unconfirmedJobAdvertisements.map(unconfirmedjobAdvertisement => (
-                    <TableRow key="{unconfirmedjobAdvertisement.id}">
-                        {/*<TableCell><Link to={`/unconfirmedjobadvertisements/${unconfirmedjobAdvertisement.id}`}>{unconfirmedjobAdvertisement.job.jobTitle}</Link></TableCell>*/}
-                        <TableCell>{unconfirmedjobAdvertisement.job.jobTitle}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.employer.companyName}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.city.cityName}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.description}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.workingTime.workingTimeName}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.workingType.workingTypeName}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.openPositionAmount}</TableCell>
-                        <TableCell>{unconfirmedjobAdvertisement.lastApplicationDate}</TableCell>
-                        <TableCell><ConfirmJobAdvertisement id={unconfirmedjobAdvertisement.id} /></TableCell>
-                        {/*<TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedjobAdvertisement.id} /></TableCell>*/}
-                        {/*<TableCell><Button primary text="Confirm" onClick={() => handleOnClickConfirm()} id={unconfirmedjobAdvertisement.id}  /></TableCell>*/}
+                unconfirmedJobAdvertisements.map(unconfirmedJobAdvertisement => (
+                    <TableRow key="{unconfirmedJobAdvertisement.id}">
+                        {/*<TableCell><Link to={`/unconfirmedJobAdvertisement/${unconfirmedjobAdvertisement.id}`}>{unconfirmedjobAdvertisement.job.jobTitle}</Link></TableCell>*/}
+                        <TableCell>{unconfirmedJobAdvertisement.job.jobTitle}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.employer.companyName}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.city.cityName}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.description}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.workingTime.workingTimeName}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.workingType.workingTypeName}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.openPositionAmount}</TableCell>
+                        <TableCell>{unconfirmedJobAdvertisement.lastApplicationDate}</TableCell>
+                        <TableCell><ConfirmJobAdvertisement id={unconfirmedJobAdvertisement.id} /></TableCell>
+                        {/*<TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedJobAdvertisement.id} /></TableCell>*/}
+                        {/*<TableCell><Button primary text="Confirm" onClick={() => handleOnClickConfirm()} id={unconfirmedJobAdvertisement.id}  /></TableCell>*/}
                     </TableRow>
                 ))
             }

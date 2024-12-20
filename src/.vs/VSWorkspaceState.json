@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\layouts",
+    "\\pages",
+    "\\store",
+    "\\store\\actions",
+    "\\store\\initialValues",
+    "\\store\\reducers"
+  ],
+  "PreviewInSolutionExplorer": false
+}

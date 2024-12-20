@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
+import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table,} from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
 import { Link } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 export default function JobAdvertisementsList() {
     const [jobAdvertisements, setJobAdvertisements] = useState([]);
@@ -29,7 +30,7 @@ export default function JobAdvertisementsList() {
             {
                 jobAdvertisements.map(jobAdvertisement => (
                     <TableRow key="{jobAdvertisement.id}">
-                        <TableCell><Link to={`/jobadvertisements/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell>
+                        <TableCell><Link to={`/jobAdvertisements/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell>
                         <TableCell>{jobAdvertisement.employer.companyName}</TableCell>
                         <TableCell>{jobAdvertisement.city.cityName}</TableCell>
                         <TableCell>{jobAdvertisement.description}</TableCell>
@@ -38,10 +39,11 @@ export default function JobAdvertisementsList() {
                     </TableRow>
                 ))
             }
-
+                    <TableRow><TableCell colspan="6"><Link to={`/jobAdvertisement/add`}>Add new job adv</Link></TableCell></TableRow>
         </TableBody>
 
                 <TableFooter>
+               
                     <TableRow>
                         <TableHeaderCell colSpan='3'>
                             <Menu floated='right' pagination>

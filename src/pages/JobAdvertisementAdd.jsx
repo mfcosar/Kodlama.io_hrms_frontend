@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import JobAdvertisementService from '../services/jobAdvertisementService';
 import JobService from '../services/jobService';
 import CityService from '../services/cityService';
@@ -7,10 +8,11 @@ import WorkingTimeService from '../services/workingTimeService';
 import WorkingTypeService from '../services/workingTypeService';
 import { Formik, Form, Field, useFormik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
-export default function AddJobAdvertisement(){
+export default function JobAdvertisementAdd() {
     let jobAdvertisementService = new JobAdvertisementService();
     let jobService = new JobService();
     let cityService = new CityService();
@@ -21,19 +23,44 @@ export default function AddJobAdvertisement(){
     const [cities, setCities] = useState([]);
     const [workingTimes, setWorkingTimes] = useState([]);
     const [workingTypes, setWorkingTypes] = useState([]);
-    
-    const today = new Date();
-    
-    useEffect(() => {
-        jobService.getJobs().then((result) => setJobs(result.data.data));
-        cityService.getCities().then((result) => setCities(result.data.data));
-        workingTimeService.getWorkingTimes().then((result) => setWorkingTimes(result.data.data));
-        workingTypeService.getWorkingTypes().then((result) => setWorkingTypes(result.data.data));
 
-    }, [jobs, cities, workingTimes, workingTypes]) 
+    const history = useHistory();
+    const today = new Date();
+
+
+    const { user: currentUser } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (currentUser) {
+            const hasEmployerRole = currentUser.roles.includes("ROLE_EMPLOYER");
+            const hasAdminRole = currentUser.roles.includes("ROLE_ADMIN");
+            if (hasEmployerRole || hasAdminRole) {
+                jobService.getJobs().then((result) => setJobs(result.data.data));
+                cityService.getCities().then((result) => setCities(result.data.data));
+                workingTimeService.getWorkingTimes().then((result) => setWorkingTimes(result.data.data));
+                workingTypeService.getWorkingTypes().then((result) => setWorkingTypes(result.data.data));
+            } else {
+                history.push("/unauthorized");
+            }
+        } else {
+            history.push("/unauthorized");
+        }
+    }, [currentUser, history, jobs, cities, workingTimes, workingTypes]);
+
+   /* useEffect(() => {
+        //if (employerId > 0) {
+            jobService.getJobs().then((result) => setJobs(result.data.data));
+            cityService.getCities().then((result) => setCities(result.data.data));
+            workingTimeService.getWorkingTimes().then((result) => setWorkingTimes(result.data.data));
+            workingTypeService.getWorkingTypes().then((result) => setWorkingTypes(result.data.data));
+        //} else 
+            //history.push("/unauthorized");
+
+    }, [jobs, cities, workingTimes, workingTypes])
+    */
 
     const initialValues = {  //initial value tanýmlarken , object yapýsýný Swagger'dan ALL!
-        employer: { id: "3" },
+        employer: { id: 3 }, //employerId
         job: { jobId: "" }, //burada jobId yerine id yazdýðým için 3 gündür hata alýyorum!-9.10.2024
         city: { id: "" },
         workingTime: { id: "" },
@@ -43,10 +70,10 @@ export default function AddJobAdvertisement(){
         maxSalary: "",
         openPositionAmount: "",
         lastApplicationDate: "",
-        publicationDate:today,
+        publicationDate: today,
         active: "true",
         confirmed: "false",
- };
+    };
     const validationSchema = Yup.object({
         job: Yup.object().shape({
             jobId: Yup.number().required("Required Field"),
@@ -69,7 +96,7 @@ export default function AddJobAdvertisement(){
     });
 
     const onSubmit = async (values, { setSubmitting }) => {
-       
+
         jobAdvertisementService.addJobAdvertisement(values).then(
             (response) => {
                 setTimeout(() => {
@@ -80,6 +107,7 @@ export default function AddJobAdvertisement(){
         );
         alert("Is ilani sisteme eklendi.");
     };
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
@@ -87,13 +115,12 @@ export default function AddJobAdvertisement(){
     });
 
     const handleChange = (fieldName, value) => {
-     
         formik.setFieldValue(fieldName, value);
         alert("field : " + fieldName + " value: " + value);
-        
     };
 
     return (
+
         <div><h3>Is Ilani Formu</h3><hr />
             <Formik >
             {({ isSubmitting}) => (
@@ -229,6 +256,8 @@ export default function AddJobAdvertisement(){
                     </Form>
                 )}
             </Formik>
+           
         </div>
     );
+
 }
