@@ -11,20 +11,21 @@ export default function Login() {
     const history = useHistory();
     const [loading, setLoading] = useState(false); //login bilgisini back-end'e gönderirken true, response gelince false
     const [message, setMessage] = useState("") // response'dan gelen message gösterilir
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         let timer;
         if (message) {
-            // Set a timer to clear the message
+            // Set a timer to clear the message 30 secs
             timer = setTimeout(() => {
                 setMessage("");
-            }, 4000);
+            }, 30000);
         }
         return () => {
             // Clean up the timer
             clearTimeout(timer);
         };
-    }, [message]);
+    }, [message]);//
 
     const initialValues = {  //initial value tanýmlarken , object yapýsýný Swagger'dan ALL!
         username: "",
@@ -35,7 +36,7 @@ export default function Login() {
         password: Yup.string().max(40, "Password must not exceed 40 characters").required("Password is required"),
     });
 
-    const onSubmit = async (values) => {//, { setSubmitting }
+    const onSubmit = async(values,{ setSubmitting }) => { 
 
         setMessage("");
         setLoading(true);
@@ -53,11 +54,13 @@ export default function Login() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-
                 setLoading(false);
                 setMessage(responseMessage);
+                setSuccess(false);
+                //alert("error : " + responseMessage);
             }
         );
+        setSubmitting(false);
         //alert("Login yapildi: " + values.username);
     };
     const formik = useFormik({
@@ -96,17 +99,21 @@ export default function Login() {
                                     onBlur={formik.handleBlur} />
                                 {(formik.touched.password || "") && (formik.errors.password || "") && (
                                     <div className="error">{formik.errors.password || ""}</div>)}
-
-                            {message && (
-                                <label color="red" basic content={message} style={{ marginTop: 10 }}></label>
-                            )}<br /><br />
                                 </div>
                             </GridColumn>
                             </GridRow>
                             <GridRow><GridColumn width={8}>
                             <div className="field">
                             <div className="column"><button class="ui button primary" type="submit" disabled={loading} >Login </button></div>
+                            </div>
+
+                            {message && (
+                                <div className="form-group">
+                                    <div className={success ? "alert alert-success" : "alert alert-danger"} role="alert">
+                                        {message}
+                                    </div>
                                 </div>
+                            )}    
                             </GridColumn>
                             </GridRow>
                         </Grid>
