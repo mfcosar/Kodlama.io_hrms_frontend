@@ -4,29 +4,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import AuthService from '../services/authService';
 import UserService from "../services/user.service";
-import ImageService from '../services/imageService';
-import ImageFromURL from "../components/ImageFromURL";
+//import ImageService from '../services/imageService';
+//import ImageFromURL from "../components/ImageFromURL";
 import EventBus from "../common/EventBus";
+import { MenuItem, Input, Label, Menu } from 'semantic-ui-react';
 
 
-export default function Navi() {
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [showCandidateBoard, setShowCandidateBoard] = useState(false);
-    const [showEmployerBoard, setShowEmployerBoard] = useState(false);
+export default function Sidebar() {
+    const [showAdminMenu, setShowAdminMenu] = useState(false);
+    const [showCandidateMenu, setShowCandidateMenu] = useState(false);
+    const [showEmployerMenu, setShowEmployerMenu] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [profilePhoto, setProfilePhoto] = useState("");
+    const [activeItem, setActiveItem] = useState('inbox');
+    //state = { activeItem: 'inbox' }
+    //handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    const handleItemClick = (e, { name }) => {
+        setActiveItem(name);
+    }
 
-    
+    //const { activeItem } = this.state
 
     useEffect(() => {  
         const user = AuthService.getCurrentUser();
 
          if (user) {
             setCurrentUser(user); 
-            setShowCandidateBoard(user.roles.includes("ROLE_CANDIDATE"));
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-            setShowEmployerBoard(user.roles.includes("ROLE_EMPLOYER"));
-            fetchProfilePhoto();
+             setShowCandidateMenu(user.roles.includes("ROLE_CANDIDATE"));
+             setShowAdminMenu(user.roles.includes("ROLE_ADMIN"));
+             setShowEmployerMenu(user.roles.includes("ROLE_EMPLOYER"));
+            //fetchProfilePhoto();
         }
         EventBus.on("logout", () => {
             logOut();
@@ -39,67 +45,92 @@ export default function Navi() {
 
     const logOut = () => {
         AuthService.logout();
-        setShowCandidateBoard(false);
-        setShowEmployerBoard(false);
-        setShowAdminBoard(false);
+        setShowCandidateMenu(false);
+        setShowEmployerMenu(false);
+        setShowAdminMenu(false);
         setCurrentUser(undefined);
     };
 
-    const fetchProfilePhoto = useCallback(async () => {
-        
-        try {
-            if (currentUser) {
-                let imageService = new ImageService();
-                
-                const response = await imageService.getImageUrlByCandidateId(currentUser.id);
-                //alert("after getImageUrl: " + response.data);
-
-                if (response.status === 200) {
-                    //const imageBlob = response.data;
-                    const imageUrl = response.data; // URL.createObjectURL(imageBlob);
-                    //alert("fetch: "+ imageUrl); //çalýþtý
-                    setProfilePhoto(imageUrl);
-                }
-            }
-        } catch (error) {
-            console.error(
-                "An error occurred while retrieving the profile photo.",
-                error.response
-            );
-    }
-    }, [currentUser]);
 
     return (
+<div>
+    <div>
+    {showCandidateMenu && (
+    <Menu vertical name="candidateMenu">
+        <MenuItem name='inbox' active={activeItem === 'inbox'} onClick={handleItemClick}  >
+           <Link to={"/"}>Hrms </Link>
+        </MenuItem>
+
+        <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
+            <Link to={"/signup"} className="nav-link">Sign Up</Link>
+        </MenuItem>
+        
+        {/*<MenuItem name='updates' active={activeItem === 'updates'} onClick={handleItemClick}>
+          <Label>1</Label>Updates
+        </MenuItem>
+
+        <MenuItem>
+          <Input icon='search' placeholder='Search mail...' />
+        </MenuItem> **/}
+        
+    </Menu>
+    )}
+
+    {showEmployerMenu && (
+    <Menu vertical name="employerMenu">
+        <MenuItem name='profile' active={activeItem === 'profile'} onClick={handleItemClick}  >
+        <Link to={`/employer/profile/${currentUser.id}`}>Profile </Link>
+        </MenuItem>
+
+        <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
+            <Link to={"/signup"} className="nav-link">Sign Up</Link>
+        </MenuItem>
+
+        <MenuItem
+          name='updates'
+          active={activeItem === 'updates'}
+          onClick={handleItemClick}
+        >
+          <Label>1</Label>
+          Updates
+        </MenuItem>
+        <MenuItem>
+          <Input icon='search' placeholder='Search mail...' />
+        </MenuItem>
+    </Menu>
+    )}
+ 
+</div>
         <div>
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <Link to={"/"} className="navbar-brand">
+            <nav className="ui vertical menu">
+                <Link to={"/"} className="item">
                     Hrms
                 </Link>
                 <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
+                    <li className="item">
                         <Link to={"/home"} className="nav-link">
                             Home
                         </Link>
                     </li>
 
 
-                    {showCandidateBoard && (
-                        <li className="nav-item">
+                    {showCandidateMenu && (
+                        <li className="item">
                             <Link to={"/candidate"} className="nav-link">
                                 Candidate Board
                             </Link>
                         </li>
                     )}
 
-                    {showEmployerBoard && (
-                        <li className="nav-item">
+                    {showEmployerMenu && (
+                        <li className="item">
                             <Link to={"/employer"} className="nav-link">
                                 Employer Board
                             </Link>
                         </li>
                     )}
-                    {showAdminBoard && (
-                        <li className="nav-item">
+                    {showAdminMenu && (
+                        <li className="item">
                             <Link to={"/admin"} className="nav-link">
                                 Admin Board
                             </Link>
@@ -107,7 +138,7 @@ export default function Navi() {
                     )}
 
                     {currentUser && (
-                        <li className="nav-item">
+                        <li className="item">
                             <Link to={"/user"} className="nav-link">
                                 User
                             </Link>
@@ -117,11 +148,12 @@ export default function Navi() {
 
                 {currentUser ? (
                     <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
+                        {/*<li className="nav-item">
                             <Link to={"/profile"} className="nav-link">
                                 <ImageFromURL imageUrl={profilePhoto} />
                             </Link>
-                        </li>
+                        </li> */
+                        }
 
                         <li className="nav-item">
                             <Link to={"/profile"} className="nav-link">
@@ -130,7 +162,6 @@ export default function Navi() {
                         </li>
                         <li className="nav-item">
                             <a href="/login" className="nav-link" onClick={logOut}>LogOut</a>
-                            {/*<AuthVerify logOut={logOut} />*/}
                         </li>
                     </div> 
                 ) : (
@@ -149,6 +180,6 @@ export default function Navi() {
                     </div>
                 )}
             </nav>
-            
-        </div>)
+        </div>
+    </div>)
 }

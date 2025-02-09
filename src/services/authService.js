@@ -17,6 +17,13 @@ const registerCandidate = (username, email, password, firstName, lastName, tcIde
     });
 };
 
+const registerEmployer = (username, email, password, companyName, webAddress, phoneNumber) => {
+    alert("user name : " + username);
+    return api.post("/auth/signup/employer", {
+        username, email, password, companyName, webAddress, phoneNumber
+    });
+};
+
 const login = (username, password) => {
     return api
         .post("/auth/signin", {
@@ -70,6 +77,7 @@ const getCurrentUser = () => {
 const AuthService = {
     registerUser,
     registerCandidate,
+    registerEmployer,
     login,
     logout,
     getCurrentUser,

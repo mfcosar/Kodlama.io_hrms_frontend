@@ -17,7 +17,7 @@ export default function SignUp() {
                 </Link><br /><br /> OR<br /><br />
             </div>
             <div>
-                <Link to={'/employer/add'}>
+                <Link to={'/employer/register'}>
                     <Button>
                         Employer
                     </Button>

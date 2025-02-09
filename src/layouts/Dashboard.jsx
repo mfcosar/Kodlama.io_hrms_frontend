@@ -12,10 +12,13 @@ import Unauthorized from "../pages/Unauthorized";
 import BoardUser from "../components/BoardUser";
 import BoardAdmin from "../components/BoardAdmin";
 import BoardCandidate from "../components/BoardCandidate";
+import BoardEmployer from "../components/BoardEmployer";
 import Profile from "../components/Profile";
 import RegisterCandidate from "../pages/RegisterCandidate";
+import RegisterEmployer from "../pages/RegisterEmployer";
 import RegisterUser2 from "../pages/RegisterUser2";
 import RegisterUser from "../pages/RegisterUser";
+import EmployerProfile from "../pages/EmployerProfile";
 
 import Trial from "../pages/Trial";
 
@@ -23,6 +26,7 @@ import EmployersList from "../pages/EmployersList";
 import { GridRow, GridColumn, Grid } from 'semantic-ui-react';
 import { ToastContainer } from 'react-toastify';
 import { Route, Switch } from 'react-router';
+import Sidebar from "./Sidebar";
 
 
 export default function Dashboard() {
@@ -31,7 +35,7 @@ export default function Dashboard() {
         <div>
             <ToastContainer position="bottom-right" />
             <Grid>
-                <GridRow><GridColumn width={4}>Here is sidebar</GridColumn>
+                <GridRow><GridColumn width={4}><Sidebar></Sidebar></GridColumn>
                          <GridColumn width={12}>  
 
                    <Switch> {/* multiple path match problem çözüldü */}
@@ -44,6 +48,8 @@ export default function Dashboard() {
                         <Route path="/job/add" component={JobAdd} />
                         <Route path="/candidate/register" component={RegisterCandidate} />
                         <Route path="/candidates" component={CandidatesList} />
+                        <Route path="/employer/register" component={RegisterEmployer} />
+                        <Route path="/employer/profile/:employerId" component={EmployerProfile} />
                         <Route path="/employers" component={EmployersList} />
                         <Route path="/login" component={Login} />
                         <Route path="/signup" component={SignUp} />
@@ -52,6 +58,7 @@ export default function Dashboard() {
                         <Route path="/user" component={BoardUser} />
                         <Route path="/admin" component={BoardAdmin} />
                         <Route path="/candidate" component={BoardCandidate} />
+                        <Route path="/employer" component={BoardEmployer} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/unauthorized" component={Unauthorized} />
                         

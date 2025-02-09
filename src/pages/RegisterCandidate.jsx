@@ -44,6 +44,7 @@ export default function RegisterCandidate() {
             .then( (response) => {
                 setMessage(response.data.message);
                 setSuccess(true);
+                setSubmitting(false);
             },
             (error) => { //backend'den gelen hatayi goster
                 const resMessage =
@@ -54,7 +55,8 @@ export default function RegisterCandidate() {
                     error.toString();
 
                     setMessage(resMessage);
-                    setSuccess(false);
+                setSuccess(false);
+                setSubmitting(false);
                 }
             );
         /*try {

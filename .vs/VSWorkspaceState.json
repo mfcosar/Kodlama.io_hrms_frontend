@@ -2,11 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\common",
     "\\src\\components",
     "\\src\\layouts",
     "\\src\\pages",
     "\\src\\services"
   ],
+  "SelectedNode": "\\src\\components\\Login.jsx",
   "PreviewInSolutionExplorer": false
 }

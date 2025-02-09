@@ -14,6 +14,7 @@ export default function Login() {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
+        
         let timer;
         if (message) {
             // Set a timer to clear the message 30 secs
@@ -40,11 +41,13 @@ export default function Login() {
 
         setMessage("");
         setLoading(true);
+        setSubmitting(true);
         //alert("submitted");
         AuthService.login(values.username, values.password).then(
             () => {
                 history.push("/")
                 window.location.reload();
+                setSubmitting(false);
                 //alert("submitted2");
             },
             error => {
@@ -57,10 +60,11 @@ export default function Login() {
                 setLoading(false);
                 setMessage(responseMessage);
                 setSuccess(false);
+                setSubmitting(false);
                 //alert("error : " + responseMessage);
             }
         );
-        setSubmitting(false);
+    
         //alert("Login yapildi: " + values.username);
     };
     const formik = useFormik({
@@ -104,7 +108,7 @@ export default function Login() {
                             </GridRow>
                             <GridRow><GridColumn width={8}>
                             <div className="field">
-                            <div className="column"><button class="ui button primary" type="submit" disabled={loading} >Login </button></div>
+                                <div className="column"><button class="ui button primary" type="submit" disabled={loading} >Login </button></div>
                             </div>
 
                             {message && (

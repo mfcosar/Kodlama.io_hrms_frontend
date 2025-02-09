@@ -20,13 +20,17 @@ const getAdminBoard = () => {
 const getCandidateBoard = () => {
     return api.get("/test/candidate");
 };
+const getEmployerBoard = () => {
+    return api.get("/test/employer");
+};
 
 const UserService = {
     getPublicContent,
     getUserBoard,
     getModeratorBoard,
     getAdminBoard,
-    getCandidateBoard
+    getCandidateBoard,
+    getEmployerBoard
 };
 
 export default UserService;
