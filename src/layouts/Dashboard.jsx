@@ -19,6 +19,7 @@ import RegisterEmployer from "../pages/RegisterEmployer";
 import RegisterUser2 from "../pages/RegisterUser2";
 import RegisterUser from "../pages/RegisterUser";
 import EmployerProfile from "../pages/EmployerProfile";
+import CandidateProfile from "../pages/CandidateProfile";
 
 import Trial from "../pages/Trial";
 
@@ -47,6 +48,7 @@ export default function Dashboard() {
                         <Route path="/city/add" component={CityAdd} />
                         <Route path="/job/add" component={JobAdd} />
                         <Route path="/candidate/register" component={RegisterCandidate} />
+                        <Route path="/candidate/profile/:candidateId" component={CandidateProfile} />
                         <Route path="/candidates" component={CandidatesList} />
                         <Route path="/employer/register" component={RegisterEmployer} />
                         <Route path="/employer/profile/:employerId" component={EmployerProfile} />

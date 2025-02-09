@@ -58,11 +58,15 @@ export default function Sidebar() {
     {showCandidateMenu && (
     <Menu vertical name="candidateMenu">
         <MenuItem name='inbox' active={activeItem === 'inbox'} onClick={handleItemClick}  >
-           <Link to={"/"}>Hrms </Link>
+        <Link to={"/"}>Hrms </Link>
+        </MenuItem>
+
+        <MenuItem name='profile' active={activeItem === 'profile'} onClick={handleItemClick}  >
+        <Link to={`/candidate/profile/${currentUser.id}`}>Profile </Link>
         </MenuItem>
 
         <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
-            <Link to={"/signup"} className="nav-link">Sign Up</Link>
+        <Link to={"/signup"} className="nav-link">Sign Up</Link>
         </MenuItem>
         
         {/*<MenuItem name='updates' active={activeItem === 'updates'} onClick={handleItemClick}>
