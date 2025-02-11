@@ -1,8 +1,9 @@
 import axios from 'axios';
+import authHeader from "./auth-header";
 
 export default class JobAdvertisementService {
     getJobAdvertisements() {
-        return axios.get("http://localhost:8080/api/jobAdvertisements/getall");
+        return axios.get("http://localhost:8080/api/jobAdvertisements/getall", { headers: authHeader(), });
     }
 
      getJobAdvertisementById(id) {
@@ -19,6 +20,6 @@ export default class JobAdvertisementService {
             .then(response => console.log(response.data.message));
     }
     addJobAdvertisement(jobAdvertisement){
-        return axios.post("http://localhost:8080/api/jobAdvertisements/add", jobAdvertisement);
+        return axios.post("http://localhost:8080/api/jobAdvertisements/add", jobAdvertisement, { headers: authHeader(), });
     }
 }

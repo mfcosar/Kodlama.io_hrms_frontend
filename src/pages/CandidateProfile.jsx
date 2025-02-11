@@ -19,11 +19,8 @@ export default function CandidateProfile() {
     const history = useHistory();
 
     useEffect(() => {
-        if (
-            !currentUser ||
-            (!currentUser.roles.includes("ROLE_CANDIDATE") &&
-                !currentUser.roles.includes("ROLE_ADMIN"))
-        ) {
+        if (!currentUser ||
+            (!currentUser.roles.includes("ROLE_CANDIDATE") && !currentUser.roles.includes("ROLE_ADMIN"))) {
             history("/unauthorized");
         } else {
             loadCandidate();

@@ -68,22 +68,18 @@ export default function Sidebar() {
         <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
         <Link to={"/signup"} className="nav-link">Sign Up</Link>
         </MenuItem>
-        
-        {/*<MenuItem name='updates' active={activeItem === 'updates'} onClick={handleItemClick}>
-          <Label>1</Label>Updates
-        </MenuItem>
-
-        <MenuItem>
-          <Input icon='search' placeholder='Search mail...' />
-        </MenuItem> **/}
-        
+               
     </Menu>
     )}
 
     {showEmployerMenu && (
     <Menu vertical name="employerMenu">
         <MenuItem name='profile' active={activeItem === 'profile'} onClick={handleItemClick}  >
-        <Link to={`/employer/profile/${currentUser.id}`}>Profile </Link>
+        <Link to={`/employer/profile/${currentUser.id}`}>Profile</Link>
+        </MenuItem>
+
+        <MenuItem name='newadvertisement' active={activeItem === 'newadvertisement'} onClick={handleItemClick}  >
+        <Link to={`/employer/addadvertisement/${currentUser.id}`}>Add New Advertisement</Link>
         </MenuItem>
 
         <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
