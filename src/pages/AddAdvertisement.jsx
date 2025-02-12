@@ -85,34 +85,40 @@ export default function AddAdvertisement() {
         lastApplicationDate: Yup.date().min(today, "Min application time must be 1 day").required("Required Field"),
     });
 
-    const onSubmit = async (values, { setSubmitting }) => {
+    const onSubmit = async (values, { setSubmitting,resetForm }) => {
 
         alert(JSON.stringify(values, null, 2));
 
-        jobAdvertisementService.addJobAdvertisement(values).
-            then((response) => {
-                setMessage(response.data.message);
-                setSuccess(true);
-                setSubmitting(false);
-
-                /*setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+        if (currentUser.id.toString() === employerId) {
+            jobAdvertisementService.addJobAdvertisement(values).
+                then((response) => {
+                    setMessage(response.data.message);
+                    setSuccess(true);
                     setSubmitting(false);
-                }, 400);*/
-            },
-            (error) => { //backend'den gelen hatayi goster
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
 
-                setMessage(resMessage);
-                setSuccess(false);
-                setSubmitting(false);
-            }
-        );
+                    setTimeout(() => {
+                        resetForm();
+                        formik.setFieldValue("job.id", ""); 
+                        formik.setFieldValue("city.id", "");
+                        formik.setFieldValue("workingType.id", "");
+                        formik.setFieldValue("workingTime.id", "");
+                    }, 100);
+                },
+                    (error) => { //backend'den gelen hatayi goster
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+
+                        setMessage(resMessage);
+                        setSuccess(false);
+                        setSubmitting(false);
+                    }
+                );
+        } else 
+            history.push("/unauthorized");
     };
 
     const formik = useFormik({
