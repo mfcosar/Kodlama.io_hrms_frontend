@@ -27,6 +27,7 @@ export default function JobAdvertisementDetail() {
         }
     }, [currentUser.id])
 
+
     return (
         <div> 
             <Card.Group>
@@ -45,17 +46,16 @@ export default function JobAdvertisementDetail() {
                             Confirmed: {jobAdvertisement?.confirmed?.toString()}<br />
                         </Card.Description>
                     </Card.Content>
-                    <Card.Content extra>
+                    {/*<Card.Content extra>
                         <div className="ui two buttons">
-                            <Link to={`/jobAdvertisement/update/${jobAdvertisement.id}`}><Button basic color="green">Update</Button></Link>
-                            <Link to={`/jobAdvertisement/deactivate/${jobAdvertisement.id}`}><Button basic color="red">Deactivate</Button></Link>
+                            <Button basic color="green">
+                                Approve
+                            </Button>
+                            <Button basic color="red">
+                                Decline
+                            </Button>
                         </div>
                     </Card.Content>
-
-                    {/*  <Button basic color="red"   onClick={handleDeactivate}>Deactivate</Button>,
-                        <Link to={`/jobAdvertisement/update/${jobAdvertisement.id}`}>Update</Link>
-                        <Link to={`/jobAdvertisement/deactivate/${jobAdvertisement.id}`}>Deactivate</Link>
-                        <TableCell><Link to={`/jobAdvertisement/update/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell>
                     */}
                 </Card>
             </Card.Group>

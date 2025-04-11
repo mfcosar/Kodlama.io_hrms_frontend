@@ -1,28 +1,42 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table,} from 'semantic-ui-react'
-import JobAdvertisementService from '../services/jobAdvertisementService';
 import { Link } from 'react-router-dom';
-import { toast } from "react-toastify";
+import { useParams, } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import AuthService from '../services/authService';
+import JobAdvertisementService from '../services/jobAdvertisementService';
+export default function AdvertisementsList() {
 
-export default function JobAdvertisementsList() {
+    const currentUser = AuthService.getCurrentUser();
     const [jobAdvertisements, setJobAdvertisements] = useState([]);
+    let { employerId } = useParams();
+    const history = useHistory();
+
     useEffect(() => {
-        let jobAdvertisementService = new JobAdvertisementService();
-        jobAdvertisementService.getJobAdvertisements().then((result) => setJobAdvertisements(result.data.data))
-    }, [])
+        if (
+            !currentUser ||
+            (!currentUser.roles.includes("ROLE_EMPLOYER") &&
+                !currentUser.roles.includes("ROLE_ADMIN"))
+        ) {
+            history("/unauthorized");
+        } else {
+            let jobAdvertisementService = new JobAdvertisementService();
+            jobAdvertisementService.getJobAdvertisementsByEmployerId(employerId).then((result) => setJobAdvertisements(result.data.data))
+        }
+    }, [currentUser.id])
 
     return (
         <div>
             <Table celled>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell>Pozisyon</TableHeaderCell>
-                        <TableHeaderCell>Isveren Adi</TableHeaderCell>
-                        <TableHeaderCell>Sehir</TableHeaderCell>
-                        <TableHeaderCell>Is Aciklamasi</TableHeaderCell>
-                        <TableHeaderCell>Acik Pozisyon Adedi</TableHeaderCell>
-                        <TableHeaderCell>Son Basvuru Tarihi</TableHeaderCell>
+                        <TableHeaderCell>Position</TableHeaderCell>
+                        <TableHeaderCell>Employer Name</TableHeaderCell>
+                        <TableHeaderCell>City</TableHeaderCell>
+                        <TableHeaderCell>Work Explanation</TableHeaderCell>
+                        <TableHeaderCell>Open Position Amount</TableHeaderCell>
+                        <TableHeaderCell>Last Application Date</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
 
@@ -30,10 +44,7 @@ export default function JobAdvertisementsList() {
             {
                 jobAdvertisements.map(jobAdvertisement => (
                     <TableRow key="{jobAdvertisement.id}">
-                        {
-                            //<TableCell><Link to={`/jobAdvertisements/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell> </Link>
-                        }
-                        <TableCell>{jobAdvertisement.job.jobTitle}</TableCell>
+                        <TableCell><Link to={`/jobAdvertisements/${jobAdvertisement.id}`}>{jobAdvertisement.job.jobTitle}</Link></TableCell>
                         <TableCell>{jobAdvertisement.employer.companyName}</TableCell>
                         <TableCell>{jobAdvertisement.city.cityName}</TableCell>
                         <TableCell>{jobAdvertisement.description}</TableCell>
@@ -41,17 +52,14 @@ export default function JobAdvertisementsList() {
                         <TableCell>{jobAdvertisement.lastApplicationDate}</TableCell>
                     </TableRow>
                 ))
-                    }
-                    {
-                        //<TableRow><TableCell colspan="6"><Link to={`/jobAdvertisement/add`}>Add new job adv</Link></TableCell></TableRow>
-                    }
+            }
         </TableBody>
-
+                
                 <TableFooter>
-               
+                                
                     <TableRow>
-                        <TableHeaderCell colSpan='3'>
-                            <Menu floated='right' pagination>
+                        {/*<TableHeaderCell colSpan='3'>
+                               <Menu floated='right' pagination>
                                 <MenuItem as='a' icon>
                                     <Icon name='chevron left' />
                                 </MenuItem>
@@ -63,9 +71,12 @@ export default function JobAdvertisementsList() {
                                     <Icon name='chevron right' />
                                 </MenuItem>
                             </Menu>
-                        </TableHeaderCell>
+                            
+                        </TableHeaderCell>*/}
                     </TableRow>
+                   
                 </TableFooter>
+                
             </Table>
 
         </div>

@@ -77,7 +77,7 @@ export default function EmployerProfile() {
 
            alert("empData retrieved: " + empData.username);
 
-            if ( employerId === currentUser.id.toString() ||
+            if ( employerId === currentUser.id.toString() ||     ///toString() e gerek var mý
                 currentUser.roles.includes("ROLE_ADMIN") 
             ) {
                 formik.setFieldValue("username", empData.username || "");
@@ -233,7 +233,8 @@ export default function EmployerProfile() {
                         </div>
                     </Form>
                 )}
-            </Formik>        </div>
+            </Formik>
+        </div>
     );
 };
 

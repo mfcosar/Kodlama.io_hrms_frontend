@@ -3,7 +3,8 @@ import CandidatesList from "../pages/CandidatesList";
 import JobAdvertisementsList from "../pages/JobAdvertisementsList";
 import JobAdvertisementDetail from "../pages/JobAdvertisementDetail";
 import UnconfirmedJobAdvertisementsList from "../pages/UnconfirmedJobAdvertisementsList";
-import JobAdvertisementAdd from "../pages/JobAdvertisementAdd";
+//import JobAdvertisementAdd from "../pages/JobAdvertisementAdd";
+import UpdateAdvertisement from "../pages/UpdateAdvertisement";
 import CityAdd from "../pages/CityAdd";
 import JobAdd from "../pages/JobAdd";
 import Login from "../components/Login";
@@ -21,6 +22,8 @@ import RegisterUser from "../pages/RegisterUser";
 import EmployerProfile from "../pages/EmployerProfile";
 import CandidateProfile from "../pages/CandidateProfile";
 import AddAdvertisement from "../pages/AddAdvertisement";
+import AdvertisementsList from "../pages/AdvertisementsList";
+
 import Trial from "../pages/Trial";
 
 import EmployersList from "../pages/EmployersList";
@@ -42,7 +45,8 @@ export default function Dashboard() {
                    <Switch> {/* multiple path match problem çözüldü */}
                         <Route exact path="/" component={JobAdvertisementsList} />
                         <Route exact path="/jobAdvertisements" component={JobAdvertisementsList} />
-                        <Route path="/jobAdvertisement/add" component={JobAdvertisementAdd} /> 
+                        <Route path="/jobAdvertisement/add" component={AddAdvertisement} />
+                        <Route path="/jobAdvertisement/update/:id" component={UpdateAdvertisement} /> 
                         <Route path="/jobAdvertisements/:id" component={JobAdvertisementDetail} />
                         <Route path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
                         <Route path="/city/add" component={CityAdd} />
@@ -52,6 +56,7 @@ export default function Dashboard() {
                         <Route path="/candidates" component={CandidatesList} />
                         <Route path="/employer/register" component={RegisterEmployer} />
                         <Route path="/employer/profile/:employerId" component={EmployerProfile} />
+                        <Route path="/employer/listadvertisements/:employerId" component={AdvertisementsList} />
                         <Route path="/employer/addadvertisement/:employerId" component={AddAdvertisement} />
                         <Route path="/employers" component={EmployersList} />
                         <Route path="/login" component={Login} />

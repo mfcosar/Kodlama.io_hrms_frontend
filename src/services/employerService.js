@@ -32,7 +32,6 @@ export default class EmployerService {
     updateEmployer(values) {
         alert("employer sent to db: " + values.id);
         return axios.put("http://localhost:8080/api/employers/" + `updateemployerbyid/${values.id}`, values, {
-            headers: authHeader(),
-        });
+            headers: authHeader(), });
     };
 }

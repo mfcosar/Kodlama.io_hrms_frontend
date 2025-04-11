@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\components",
     "\\layouts",
     "\\pages",
+    "\\services",
     "\\store",
     "\\store\\actions",
     "\\store\\initialValues",

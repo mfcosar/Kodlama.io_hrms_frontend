@@ -7,7 +7,7 @@ export default class JobAdvertisementService {
     }
 
      getJobAdvertisementById(id) {
-         return axios.get("http://localhost:8080/api/jobAdvertisements/getbyid?id=" + id) //whether make here post?
+         return axios.get("http://localhost:8080/api/jobAdvertisements/getbyid?id=" + id, { headers: authHeader(), }) 
          //return axios.get(`http://localhost:8080/api/jobAdvertisements/getbyid/${id}`);
     }
 
@@ -22,4 +22,16 @@ export default class JobAdvertisementService {
     addJobAdvertisement(jobAdvertisement){
         return axios.post("http://localhost:8080/api/jobAdvertisements/add", jobAdvertisement, { headers: authHeader(), });
     }
+
+    getJobAdvertisementsByEmployerId(employerId) {
+        alert("Get all advs of employer no: " + employerId);
+        return axios.get("http://localhost:8080/api/jobAdvertisements/getallbyemployerid?employerId=" + employerId, { headers: authHeader(), }) //whether make here post?
+        
+    }
+    updateJobAdvertisement(values)  {
+        alert("JobAdvertisement sent to db: " + values.id + "header : " + JSON.stringify(authHeader()));
+        return axios.put("http://localhost:8080/api/jobAdvertisements/" + `updatejobAdvertisementbyid/${values.id}`, values, {
+            headers: authHeader(),
+        });
+    };
 }

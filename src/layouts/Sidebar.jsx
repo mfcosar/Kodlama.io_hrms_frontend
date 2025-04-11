@@ -65,9 +65,9 @@ export default function Sidebar() {
         <Link to={`/candidate/profile/${currentUser.id}`}>Profile </Link>
         </MenuItem>
 
-        <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
+        {/*<MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
         <Link to={"/signup"} className="nav-link">Sign Up</Link>
-        </MenuItem>
+        </MenuItem>*/}
                
     </Menu>
     )}
@@ -78,13 +78,17 @@ export default function Sidebar() {
         <Link to={`/employer/profile/${currentUser.id}`}>Profile</Link>
         </MenuItem>
 
+        <MenuItem name='listadvertisements' active={activeItem === 'listadvertisements'} onClick={handleItemClick}  >
+        <Link to={`/employer/listadvertisements/${currentUser.id}`}>List Advertisements</Link>
+        </MenuItem>
+
         <MenuItem name='newadvertisement' active={activeItem === 'newadvertisement'} onClick={handleItemClick}  >
         <Link to={`/employer/addadvertisement/${currentUser.id}`}>Add New Advertisement</Link>
         </MenuItem>
 
-        <MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
-            <Link to={"/signup"} className="nav-link">Sign Up</Link>
-        </MenuItem>
+        {/*<MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
+        <Link to={"/signup"} className="nav-link">Sign Up</Link>
+        </MenuItem>*/}
 
         <MenuItem
           name='updates'
