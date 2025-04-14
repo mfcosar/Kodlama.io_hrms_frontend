@@ -88,7 +88,7 @@ export default function UpdateAdvertisement() {
         minSalary: Yup.number().min(1, "Less than 1").positive().integer(),
         maxSalary: Yup.number().min(1, "Less than 1").positive().integer(),
         openPositionAmount: Yup.number().min(1, "Less than 1").required("Required Field").positive().integer(),
-
+        //publicationDate: Yup.date().min(today, "Min application time must be 1 day").required("Required Field"),
         //lastApplicationDate: Yup.date().min(today, "Min application time must be 1 day").required("Required Field"),
     });
 
@@ -110,6 +110,7 @@ export default function UpdateAdvertisement() {
             const result = await jobAdvertisementService.getJobAdvertisementById(id);
             const advData = result.data.data;
             let formatted_lastApplicationDate = formatDate(advData.lastApplicationDate);
+            let formatted_publicationDate = formatDate(advData.publicationDate);
 
             alert("advData retrieved: " + JSON.stringify(advData) + "\n current user id: " + currentUser.id + "\n advData.employer.id:" + advData.employer.id + "\n formatted_lastApplicationDate:" + formatted_lastApplicationDate); //advData.job.jobTitle
 
@@ -124,12 +125,13 @@ export default function UpdateAdvertisement() {
                 formik.setFieldValue("minSalary", advData.minSalary || "");
                 formik.setFieldValue("maxSalary", advData.maxSalary || "");
                 formik.setFieldValue("openPositionAmount", advData.openPositionAmount || "");
+                formik.setFieldValue("publicationDate", formatted_publicationDate || "");
                 formik.setFieldValue("lastApplicationDate", formatted_lastApplicationDate || ""); //advData.lastApplicationDate
                 formik.setFieldValue("description", advData.description || "");
                 formik.setFieldValue("active", advData.active || ""); //hata vermedi
+                formik.setFieldValue("confirmed", advData.confirmed || "");
 
                 setJobAdvertisement(advData); //burasý tmm
-                //alert("jobAdvertisement.openPositionAmount: " + jobAdvertisement.openPositionAmount);
 
             } else {
                 history("/unauthorized");
@@ -307,6 +309,18 @@ export default function UpdateAdvertisement() {
                         {(formik.touched.openPositionAmount || "") && (formik.errors.openPositionAmount || "") && (
                             <div className="error">{formik.errors.openPositionAmount || ""}</div>)}
                     </div>
+                    <div></div>
+                </div>
+
+                <div className="row">
+                    <div className="column required field">
+                        <label htmlFor="publicationDate">Publication Date</label>
+                        <Field type="date" name="publicationDate" value={formik.values.publicationDate}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur} />
+                        {(formik.touched.publicationDate || "") && (formik.errors.publicationDate || "") && (
+                            <div className="error">{formik.errors.publicationDate || ""}</div>)}
+                    </div>
                     <div className="column required field">
                         <label htmlFor="lastApplicationDate">Last Application Date</label>
                         <Field type="date" name="lastApplicationDate" value={formik.values.lastApplicationDate}
@@ -316,7 +330,24 @@ export default function UpdateAdvertisement() {
                             <div className="error">{formik.errors.lastApplicationDate || ""}</div>)}
                     </div>
                 </div>
+                <div className="row">
+                    <div className="column required field">
+                        <label htmlFor="active">Active &nbsp;&nbsp;
+                        <input type="checkbox" name="active" checked={formik.values.active} value={formik.values.active}
+                        onChange={formik.handleChange} onBlur={formik.handleBlur} /></label>
+                        {(formik.touched.active || "") && (formik.errors.active || "") && (
+                        <div className="error">{formik.errors.active || ""}</div>)}
+                    </div>
+                    <div className="column required field">
+                        <label htmlFor="confirmed">Confirmed &nbsp;&nbsp;
+                        <input type="checkbox" name="confirmed" checked={formik.values.confirmed} disabled  value={formik.values.confirmed}
+                         onChange={formik.handleChange} onBlur={formik.handleBlur} /></label>
+                        {(formik.touched.confirmed || "") && (formik.errors.confirmed || "") && (
+                        <div className="error">{formik.errors.confirmed || ""}</div>)}
+                    </div>
+                </div>
             </div>
+
             <div className="ui divided one column grid">
                 <div className="row">
                     <div className="column required field" fluid>
@@ -333,8 +364,6 @@ export default function UpdateAdvertisement() {
                     <div className="column">
                     <button class="ui button primary fluid" type="submit" disabled={isSubmitting}>Update
                     </button></div>
-                                {//onClick={(event)=>event.preventDefault()}  onClick={formik.handleSubmit} onChange={(event) => handleChange("job.jobId", event.target.value)} {formik.handleChange}
-                                }
                 </div>
                 {message && (
                     <div className="form-group">

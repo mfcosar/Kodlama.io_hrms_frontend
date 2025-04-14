@@ -27,15 +27,16 @@ export default function AdvertisementsList() {
     }, [currentUser.id])
 
     return (
-        <div>
+        <div> 
             <Table celled>
-                <TableHeader>
+                <TableHeader> 
                     <TableRow>
                         <TableHeaderCell>Position</TableHeaderCell>
                         <TableHeaderCell>Employer Name</TableHeaderCell>
                         <TableHeaderCell>City</TableHeaderCell>
                         <TableHeaderCell>Work Explanation</TableHeaderCell>
                         <TableHeaderCell>Open Position Amount</TableHeaderCell>
+                        <TableHeaderCell>Publication Date</TableHeaderCell>
                         <TableHeaderCell>Last Application Date</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
@@ -49,6 +50,7 @@ export default function AdvertisementsList() {
                         <TableCell>{jobAdvertisement.city.cityName}</TableCell>
                         <TableCell>{jobAdvertisement.description}</TableCell>
                         <TableCell>{jobAdvertisement.openPositionAmount}</TableCell>
+                        <TableCell>{jobAdvertisement.publicationDate}</TableCell>
                         <TableCell>{jobAdvertisement.lastApplicationDate}</TableCell>
                     </TableRow>
                 ))

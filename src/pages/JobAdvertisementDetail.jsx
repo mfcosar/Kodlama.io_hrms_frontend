@@ -48,7 +48,8 @@ export default function JobAdvertisementDetail() {
                     <Card.Content extra>
                         <div className="ui two buttons">
                             <Link to={`/jobAdvertisement/update/${jobAdvertisement.id}`}><Button basic color="green">Update</Button></Link>
-                            <Link to={`/jobAdvertisement/deactivate/${jobAdvertisement.id}`}><Button basic color="red">Deactivate</Button></Link>
+                            <Link to={`/jobAdvertisement/activate/${jobAdvertisement.id}`}>
+                                <Button basic color="red">{jobAdvertisement?.active ? "Deactivate" : " Activate"}</Button></Link>
                         </div>
                     </Card.Content>
 

@@ -23,6 +23,7 @@ import EmployerProfile from "../pages/EmployerProfile";
 import CandidateProfile from "../pages/CandidateProfile";
 import AddAdvertisement from "../pages/AddAdvertisement";
 import AdvertisementsList from "../pages/AdvertisementsList";
+import ActivateAdvertisement from "../pages/ActivateAdvertisement";
 
 import Trial from "../pages/Trial";
 
@@ -46,7 +47,8 @@ export default function Dashboard() {
                         <Route exact path="/" component={JobAdvertisementsList} />
                         <Route exact path="/jobAdvertisements" component={JobAdvertisementsList} />
                         <Route path="/jobAdvertisement/add" component={AddAdvertisement} />
-                        <Route path="/jobAdvertisement/update/:id" component={UpdateAdvertisement} /> 
+                        <Route path="/jobAdvertisement/update/:id" component={UpdateAdvertisement} />
+                        <Route path="/jobAdvertisement/activate/:id" component={ActivateAdvertisement} />
                         <Route path="/jobAdvertisements/:id" component={JobAdvertisementDetail} />
                         <Route path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
                         <Route path="/city/add" component={CityAdd} />
