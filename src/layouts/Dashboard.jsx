@@ -21,8 +21,9 @@ import RegisterUser2 from "../pages/RegisterUser2";
 import RegisterUser from "../pages/RegisterUser";
 import EmployerProfile from "../pages/EmployerProfile";
 import CandidateProfile from "../pages/CandidateProfile";
+import AdminProfile from "../pages/AdminProfile";
 import AddAdvertisement from "../pages/AddAdvertisement";
-import AdvertisementsList from "../pages/AdvertisementsList";
+import EmployerAdvertisementsList from "../pages/EmployerAdvertisementsList";
 import ActivateAdvertisement from "../pages/ActivateAdvertisement";
 
 import Trial from "../pages/Trial";
@@ -58,7 +59,7 @@ export default function Dashboard() {
                         <Route path="/candidates" component={CandidatesList} />
                         <Route path="/employer/register" component={RegisterEmployer} />
                         <Route path="/employer/profile/:employerId" component={EmployerProfile} />
-                        <Route path="/employer/listadvertisements/:employerId" component={AdvertisementsList} />
+                        <Route path="/employer/listadvertisements/:employerId" component={EmployerAdvertisementsList} />
                         <Route path="/employer/addadvertisement/:employerId" component={AddAdvertisement} />
                         <Route path="/employers" component={EmployersList} />
                         <Route path="/login" component={Login} />
@@ -66,6 +67,7 @@ export default function Dashboard() {
                         <Route path="/user/register" component={RegisterUser} />
                         <Route path="/user/register2" component={RegisterUser2} />
                         <Route path="/user" component={BoardUser} />
+                        <Route path="/admin/profile/:employeeId" component={AdminProfile} />
                         <Route path="/admin" component={BoardAdmin} />
                         <Route path="/candidate" component={BoardCandidate} />
                         <Route path="/employer" component={BoardEmployer} />

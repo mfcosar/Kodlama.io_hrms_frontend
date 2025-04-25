@@ -55,6 +55,23 @@ export default function Sidebar() {
     return (
 <div>
     <div>
+    {showAdminMenu && (
+    <Menu vertical name="adminMenu">
+        <MenuItem name='inbox' active={activeItem === 'inbox'} onClick={handleItemClick}  >
+        <Link to={"/"}>Hrms </Link>
+        </MenuItem>
+
+        <MenuItem name='profile' active={activeItem === 'profile'} onClick={handleItemClick}  >
+        <Link to={`/admin/profile/${currentUser.id}`}>Profile </Link>
+        </MenuItem>
+
+        {/*<MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
+        <Link to={"/signup"} className="nav-link">Sign Up</Link>
+        </MenuItem>*/}
+               
+    </Menu>
+    )}
+
     {showCandidateMenu && (
     <Menu vertical name="candidateMenu">
         <MenuItem name='inbox' active={activeItem === 'inbox'} onClick={handleItemClick}  >
@@ -88,7 +105,7 @@ export default function Sidebar() {
 
         {/*<MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
         <Link to={"/signup"} className="nav-link">Sign Up</Link>
-        </MenuItem>*/}
+        </MenuItem>
 
         <MenuItem
           name='updates'
@@ -97,7 +114,7 @@ export default function Sidebar() {
         >
           <Label>1</Label>
           Updates
-        </MenuItem>
+        </MenuItem>*/}
         <MenuItem>
           <Input icon='search' placeholder='Search mail...' />
         </MenuItem>
@@ -107,14 +124,10 @@ export default function Sidebar() {
 </div>
         <div>
             <nav className="ui vertical menu">
-                <Link to={"/"} className="item">
-                    Hrms
-                </Link>
+                <Link to={"/"} className="item">Hrms</Link>
                 <div className="navbar-nav mr-auto">
                     <li className="item">
-                        <Link to={"/home"} className="nav-link">
-                            Home
-                        </Link>
+                        <Link to={"/home"} className="nav-link">Home</Link>
                     </li>
 
 

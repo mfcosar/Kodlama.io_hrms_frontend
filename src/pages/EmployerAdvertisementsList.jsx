@@ -6,7 +6,7 @@ import { useParams, } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import AuthService from '../services/authService';
 import JobAdvertisementService from '../services/jobAdvertisementService';
-export default function AdvertisementsList() {
+export default function EmployerAdvertisementsList() {
 
     const currentUser = AuthService.getCurrentUser();
     const [jobAdvertisements, setJobAdvertisements] = useState([]);
@@ -34,7 +34,7 @@ export default function AdvertisementsList() {
                         <TableHeaderCell>Position</TableHeaderCell>
                         <TableHeaderCell>Employer Name</TableHeaderCell>
                         <TableHeaderCell>City</TableHeaderCell>
-                        <TableHeaderCell>Work Explanation</TableHeaderCell>
+                        <TableHeaderCell>Job Description</TableHeaderCell>
                         <TableHeaderCell>Open Position Amount</TableHeaderCell>
                         <TableHeaderCell>Publication Date</TableHeaderCell>
                         <TableHeaderCell>Last Application Date</TableHeaderCell>

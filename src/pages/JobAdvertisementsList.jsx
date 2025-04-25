@@ -17,12 +17,12 @@ export default function JobAdvertisementsList() {
             <Table celled>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell>Pozisyon</TableHeaderCell>
-                        <TableHeaderCell>Isveren Adi</TableHeaderCell>
-                        <TableHeaderCell>Sehir</TableHeaderCell>
-                        <TableHeaderCell>Is Aciklamasi</TableHeaderCell>
-                        <TableHeaderCell>Acik Pozisyon Adedi</TableHeaderCell>
-                        <TableHeaderCell>Son Basvuru Tarihi</TableHeaderCell>
+                        <TableHeaderCell>Position</TableHeaderCell>
+                        <TableHeaderCell>Company Name</TableHeaderCell>
+                        <TableHeaderCell>City</TableHeaderCell>
+                        <TableHeaderCell>Description</TableHeaderCell>
+                        <TableHeaderCell>Open Position Amount</TableHeaderCell>
+                        <TableHeaderCell>Last Application Date</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
 

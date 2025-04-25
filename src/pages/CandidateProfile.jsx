@@ -174,7 +174,7 @@ export default function CandidateProfile() {
                                     <label htmlFor="email">E-mail </label>
                                     <Field type="text" name="email" value={formik.values.email}
                                         onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur} />
+                                        onBlur={formik.handleBlur} disabled="true" />
                                     {(formik.touched.email || "") && (formik.errors.email || "") && (
                                         <div className="error">{formik.errors.email || ""}</div>)}
                                 </div>

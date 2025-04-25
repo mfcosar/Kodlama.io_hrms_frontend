@@ -5,63 +5,44 @@ import { useHistory } from 'react-router-dom';
 import { Formik, Form, Field, useFormik } from 'formik';
 import * as Yup from 'yup';
 import AuthService from '../services/authService';
-import EmployerService from '../services/employerService';
+import EmployeeService from '../services/employeeService';
 
-export default function EmployerProfile() {
+export default function AdminProfile() {
 
     const currentUser = AuthService.getCurrentUser();
-    const employerService = new EmployerService();
+    const employeeService = new EmployeeService();
 
-    let { employerId } = useParams();
-    const [employer, setEmployer] = useState({});
+    let { employeeId } = useParams();
+    const [employee, setEmployee] = useState({});
     const [message, setMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        if (
-            !currentUser ||
-            (!currentUser.roles.includes("ROLE_EMPLOYER") &&
-                !currentUser.roles.includes("ROLE_ADMIN"))
-        ) {
+        if (!currentUser || (!currentUser.roles.includes("ROLE_ADMIN"))) {
             history("/unauthorized");
         } else {
-            loadEmployer();
+            loadEmployee();
         }
     }, [currentUser.id]);
 
     const initialValues = {
         "id": currentUser.id,
-        "companyName": "",
-        "webAddress": "https://www.",
-        "phoneNumber": "",
-        "email": "",
         "username": "",
+        "email": "",
+        "firstName": "",
+        "lastName": "",
+        "verified": "",
         //"password": "",
         //"passwordConfirm": "",
     }
-    const extractDomainFromWebAddress = (urlStr) => {
-        const webDomain = urlStr.replace(/https?:\/\//, '').replace('www.', '').split('/')[0];
-        return webDomain.split('@').pop();
-    };
-    const extractDomainFromEmail = (emailStr) => {
-        const emailDomain = emailStr.replace(/https?:\/\//, '').split('/')[0];
-        return emailDomain.split('@').pop();
-    };
+
 
     const validationSchema = Yup.object({
-        "companyName": Yup.string().max(255, "Over 255 Characters").required("Required Field"),
-        "phoneNumber": Yup.string().max(11, "Over 17 Characters").required("Required Field"),
+        "firstName": Yup.string().max(50, "Over 50 Characters").required("Required Field"),
+        "lastName": Yup.string().max(50, "Over 50 Characters").required("Required Field"),
         "email": Yup.string().email("Not a Valid Email").max(50, "Over 50 Characters").required("Required Field"),
-        "webAddress": Yup.string().max(50, "Over 50 Characters").required("Required Field")
-            .test('domains-match', 'Email and web address domains must match', function (value) {
-                const { email } = this.parent;
-                if (!email || !value)
-                    return true; // Skip if either field is not present 
-                const emailDomain = extractDomainFromEmail(email);
-                const webDomain = extractDomainFromWebAddress(value);
-                return emailDomain === webDomain;
-            }),
+        "verified": Yup.boolean().required("This field is required"),
         //"password": Yup.string().max(25, "Over 25 Characters").required("Required Field"),
         //"passwordConfirm": Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm password is required'),
 
@@ -69,29 +50,30 @@ export default function EmployerProfile() {
 
 
 
-    const loadEmployer = async () => {
-        alert("loading employer");
+    const loadEmployee = async () => {
+        alert("loading employee/admin : " + employeeId);
         try {
-            const result = await employerService.getEmployerById(currentUser.id);
+            const result = await employeeService.getEmployeeById(currentUser.id);
             const empData = result.data.data;
 
-           alert("empData retrieved: " + empData.username);
+            alert("empData retrieved: " + JSON.stringify(empData));
 
-            if ( employerId === currentUser.id.toString() ||     ///toString() e gerek var mý
+            if ( employeeId === currentUser.id.toString() ||     ///toString() e gerek var mý
                 currentUser.roles.includes("ROLE_ADMIN") 
             ) {
+                alert("empData retrieved: " + empData.username);
                 formik.setFieldValue("username", empData.username || "");
                 formik.setFieldValue("email", empData.email || "");
-                formik.setFieldValue("companyName", empData.companyName || "");
-                formik.setFieldValue("webAddress", empData.webAddress || "");
-                formik.setFieldValue("phoneNumber", empData.phoneNumber || "");
+                formik.setFieldValue("firstName", empData.firstName || "");
+                formik.setFieldValue("lastName", empData.lastName || "");
+                formik.setFieldValue("verified", empData.verified || "");
 
-                setEmployer(empData);
+                setEmployee(empData);
             } else {
                 history("/unauthorized");
             }
         } catch (error) {
-            console.error("An error occurred while loading employer data:", error);
+            console.error("An error occurred while loading employee data:", error);
         }
     };
 
@@ -105,7 +87,7 @@ export default function EmployerProfile() {
 
         alert(JSON.stringify(values, null, 2));
 
-        employerService.updateEmployer(values)
+        employeeService.updateEmployee(values)
             .then((response) => {
                 setMessage(response.data.message);
                 setSuccess(true);
@@ -136,11 +118,11 @@ export default function EmployerProfile() {
         <div className="container">
             <header className="jumbotron">
                 <h3>
-                    <strong>{currentUser.username}</strong> Employer Profile
+                    <strong>{currentUser.username}</strong> Admin Profile
                 </h3>
             </header>
             <p>
-                <strong>Id:</strong> {employerId}<br />
+                <strong>Id:</strong> {employeeId}<br />
                 <strong>Id:</strong> {currentUser.id}<br />
             </p>
             <Formik >
@@ -150,31 +132,30 @@ export default function EmployerProfile() {
 
                             <div className="row">
                                 <div className="column required field">
-                                    <label htmlFor="companyName">Company Name </label>
-                                    <Field type="text" name="companyName" value={formik.values.companyName}
+                                    <label htmlFor="firstName">First Name </label>
+                                    <Field type="text" name="firstName" value={formik.values.firstName}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur} />
-                                    {(formik.touched.companyName || "") && (formik.errors.companyName || "") && (
-                                        <div className="error">{formik.errors.companyName || ""}</div>)}
+                                    {(formik.touched.firstName || "") && (formik.errors.firstName || "") && (
+                                        <div className="error">{formik.errors.firstName || ""}</div>)}
                                 </div>
 
                                 <div className="column required field">
-                                    <label htmlFor="webAddress">Web Address</label>
-                                    <Field type="text" name="webAddress" value={formik.values.webAddress}
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <Field type="text" name="lastName" value={formik.values.lastName}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur} />
-                                    {(formik.touched.webAddress || "") && (formik.errors.webAddress || "") && (
-                                        <div className="error">{formik.errors.webAddress || ""}</div>)}
+                                    {(formik.touched.lastName || "") && (formik.errors.lastName || "") && (
+                                        <div className="error">{formik.errors.lastName || ""}</div>)}
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="column required field">
-                                    <label htmlFor="phoneNumber">Phone Number </label>
-                                    <Field type="text" name="phoneNumber" value={formik.values.phoneNumber}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur} />
-                                    {(formik.touched.phoneNumber || "") && (formik.errors.phoneNumber || "") && (
-                                        <div className="error">{formik.errors.phoneNumber || ""}</div>)}
+                                    <label htmlFor="verified">Verified &nbsp;&nbsp;
+                                        <input type="checkbox" name="verified" checked={formik.values.verified} disabled value={formik.values.verified}
+                                            onChange={formik.handleChange} onBlur={formik.handleBlur} /></label>
+                                    {(formik.touched.verified || "") && (formik.errors.verified || "") && (
+                                        <div className="error">{formik.errors.verified || ""}</div>)}
                                 </div>
 
                             </div>
@@ -182,16 +163,14 @@ export default function EmployerProfile() {
                                 <div className="column required field">
                                     <label htmlFor="email">E-mail </label>
                                     <Field type="text" name="email" value={formik.values.email}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur} disabled="true" />
+                                        onChange={formik.handleChange} onBlur={formik.handleBlur} disabled="true"/>
                                     {(formik.touched.email || "") && (formik.errors.email || "") && (
                                         <div className="error">{formik.errors.email || ""}</div>)}
                                 </div>
                                 <div className="column required field">
                                     <label htmlFor="username">User Name</label>
                                     <Field type="text" name="username" value={formik.values.email}
-                                        onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                        disabled="true" />
+                                        onChange={formik.handleChange} onBlur={formik.handleBlur} disabled="true" />
                                     {(formik.touched.email || "") && (formik.errors.email || "") && (
                                         <div className="error">{formik.errors.email || ""}</div>)}
                                 </div>

@@ -1,32 +1,46 @@
 import React from 'react';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
+import AuthService from '../services/authService';
 import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
 
 export default function UnconfirmedJobAdvertisementsList() {
 
+    const currentUser = AuthService.getCurrentUser();
+    const history = useHistory();
+
     const [unconfirmedJobAdvertisements, setUnconfirmedJobAdvertisements] = useState([]);
     let jobAdvertisementService = new JobAdvertisementService();
     
-      useEffect(() => {
+      /*useEffect(() => {
         jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
-      }, [unconfirmedJobAdvertisements])
+      }, [unconfirmedJobAdvertisements])*/
+
+
+    useEffect(() => {
+        if (!currentUser || (!currentUser.roles.includes("ROLE_ADMIN"))) {
+            history("/unauthorized");
+        } else {
+            jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
+        }
+    }, [currentUser.id])
 
 return (
         <div>
             <Table celled>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell>Pozisyon</TableHeaderCell>
-                        <TableHeaderCell>Isveren Adi</TableHeaderCell>
-                        <TableHeaderCell>Sehir</TableHeaderCell>
-                        <TableHeaderCell>Is Aciklamasi</TableHeaderCell>
-                        <TableHeaderCell>Calisma zamani</TableHeaderCell>
-                        <TableHeaderCell>Calisma tipi</TableHeaderCell>
-                        <TableHeaderCell>Acik Pozisyon Adedi</TableHeaderCell>
-                        <TableHeaderCell>Son Basvuru Tarihi</TableHeaderCell>
-                        <TableHeaderCell>Onaylama</TableHeaderCell>
+                        <TableHeaderCell>Position</TableHeaderCell>
+                        <TableHeaderCell>Employer Name</TableHeaderCell>
+                        <TableHeaderCell>City</TableHeaderCell>
+                        <TableHeaderCell>Job Description</TableHeaderCell>
+                        <TableHeaderCell>Working Time</TableHeaderCell>
+                        <TableHeaderCell>Working Type</TableHeaderCell>
+                        <TableHeaderCell>Open Position Amount</TableHeaderCell>
+                        <TableHeaderCell>Last Application Date</TableHeaderCell>
+                        <TableHeaderCell>Confirmation</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
 
