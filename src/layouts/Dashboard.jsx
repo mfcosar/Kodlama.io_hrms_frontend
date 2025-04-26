@@ -15,6 +15,7 @@ import BoardAdmin from "../components/BoardAdmin";
 import BoardCandidate from "../components/BoardCandidate";
 import BoardEmployer from "../components/BoardEmployer";
 import Profile from "../components/Profile";
+import RegisterEmployee from "../pages/RegisterEmployee";
 import RegisterCandidate from "../pages/RegisterCandidate";
 import RegisterEmployer from "../pages/RegisterEmployer";
 import RegisterUser2 from "../pages/RegisterUser2";
@@ -25,6 +26,7 @@ import AdminProfile from "../pages/AdminProfile";
 import AddAdvertisement from "../pages/AddAdvertisement";
 import EmployerAdvertisementsList from "../pages/EmployerAdvertisementsList";
 import ActivateAdvertisement from "../pages/ActivateAdvertisement";
+
 
 import Trial from "../pages/Trial";
 
@@ -67,6 +69,7 @@ export default function Dashboard() {
                         <Route path="/user/register" component={RegisterUser} />
                         <Route path="/user/register2" component={RegisterUser2} />
                         <Route path="/user" component={BoardUser} />
+                        <Route path="/admin/register" component={RegisterEmployee} />
                         <Route path="/admin/profile/:employeeId" component={AdminProfile} />
                         <Route path="/admin" component={BoardAdmin} />
                         <Route path="/candidate" component={BoardCandidate} />

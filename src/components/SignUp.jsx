@@ -21,8 +21,14 @@ export default function SignUp() {
                     <Button>
                         Employer
                     </Button>
+                </Link><br /><br /> OR<br /><br />
+            </div>
+            <div>
+                <Link to={'/admin/register'}>
+                    <Button>
+                        Admin
+                    </Button>
                 </Link>
             </div>
-
         </div>);
 }
