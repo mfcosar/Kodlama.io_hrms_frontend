@@ -1,5 +1,4 @@
 import axios from 'axios';
-import api from "./api";
 import authHeader from "./auth-header";
 
 export default class EmployerService {
@@ -11,7 +10,7 @@ export default class EmployerService {
 
     getEmployerById(id) {
         alert("employer retrieved from db: " + id);
-        return axios.get("http://localhost:8080/api/employers/" + `getemployerbyid/${id}`, {
+        return axios.get(`http://localhost:8080/api/employers/getemployerbyid/${id}`, {
             headers: authHeader(),
         });
         // api.post'a girme, axios üzerinden datayý al
@@ -29,9 +28,19 @@ export default class EmployerService {
 
     };
 
+    getUnconfirmedEmployers() {
+        return axios.get("http://localhost:8080/api/employers/getallunconfirmed", { headers: authHeader(), });
+    }
+
+    setEmployerEmployeeConfirmedById(employerId, employeeId) {
+        //alert("axios'tayiz, employerId : " + employerId + JSON.stringify(authHeader()));
+        return axios.get(`http://localhost:8080/api/verifications/employeeConfirmEmployer?employerId=${employerId}&employeeId=${employeeId}`,
+            { headers: authHeader(), });
+    }
+
     updateEmployer(values) {
         alert("employer sent to db: " + values.id);
-        return axios.put("http://localhost:8080/api/employers/" + `updateemployerbyid/${values.id}`, values, {
+        return axios.put(`http://localhost:8080/api/employers/updateemployerbyid/${values.id}`, values, {
             headers: authHeader(), });
     };
 }

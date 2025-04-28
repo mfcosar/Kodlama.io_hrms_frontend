@@ -22,7 +22,9 @@ import RegisterUser2 from "../pages/RegisterUser2";
 import RegisterUser from "../pages/RegisterUser";
 import EmployerProfile from "../pages/EmployerProfile";
 import CandidateProfile from "../pages/CandidateProfile";
-import AdminProfile from "../pages/AdminProfile";
+import AdminProfile from "../pages/AdminProfile"; 
+import UnconfirmedEmployers from "../pages/UnconfirmedEmployers"; 
+
 import AddAdvertisement from "../pages/AddAdvertisement";
 import EmployerAdvertisementsList from "../pages/EmployerAdvertisementsList";
 import ActivateAdvertisement from "../pages/ActivateAdvertisement";
@@ -53,7 +55,7 @@ export default function Dashboard() {
                         <Route path="/jobAdvertisement/update/:id" component={UpdateAdvertisement} />
                         <Route path="/jobAdvertisement/activate/:id" component={ActivateAdvertisement} />
                         <Route path="/jobAdvertisements/:id" component={JobAdvertisementDetail} />
-                        <Route path="/unconfirmedjobadvertisements" component={UnconfirmedJobAdvertisementsList} />
+                        <Route path="/unconfirmedjobadvertisements/" component={UnconfirmedJobAdvertisementsList} />
                         <Route path="/city/add" component={CityAdd} />
                         <Route path="/job/add" component={JobAdd} />
                         <Route path="/candidate/register" component={RegisterCandidate} />
@@ -71,6 +73,7 @@ export default function Dashboard() {
                         <Route path="/user" component={BoardUser} />
                         <Route path="/admin/register" component={RegisterEmployee} />
                         <Route path="/admin/profile/:employeeId" component={AdminProfile} />
+                        <Route path="/admin/unconfirmedemployers/:employeeId" component={UnconfirmedEmployers} />
                         <Route path="/admin" component={BoardAdmin} />
                         <Route path="/candidate" component={BoardCandidate} />
                         <Route path="/employer" component={BoardEmployer} />

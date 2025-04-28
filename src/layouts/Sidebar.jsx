@@ -64,7 +64,9 @@ export default function Sidebar() {
         <MenuItem name='profile' active={activeItem === 'profile'} onClick={handleItemClick}  >
         <Link to={`/admin/profile/${currentUser.id}`}>Profile </Link>
         </MenuItem>
-
+        <MenuItem name='confirmemployer' active={activeItem === 'confirmemployer'} onClick={handleItemClick}  >
+        <Link to={`/admin/unconfirmedemployers/${currentUser.id}`}>Unconfirmed Employers </Link>
+        </MenuItem>
         {/*<MenuItem name='spam' active={activeItem === 'spam'} onClick={handleItemClick} >
         <Link to={"/signup"} className="nav-link">Sign Up</Link>
         </MenuItem>*/}
