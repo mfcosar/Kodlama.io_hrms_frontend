@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useParams, } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table } from 'semantic-ui-react'
 import JobAdvertisementService from '../services/jobAdvertisementService';
@@ -9,15 +10,10 @@ import ConfirmJobAdvertisement from "../pages/ConfirmJobAdvertisement";
 export default function UnconfirmedJobAdvertisementsList() {
 
     const currentUser = AuthService.getCurrentUser();
-    const history = useHistory();
-
+    const jobAdvertisementService = new JobAdvertisementService();
+    let { employeeId } = useParams();
     const [unconfirmedJobAdvertisements, setUnconfirmedJobAdvertisements] = useState([]);
-    let jobAdvertisementService = new JobAdvertisementService();
-    
-      /*useEffect(() => {
-        jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
-      }, [unconfirmedJobAdvertisements])*/
-
+    const history = useHistory();
 
     useEffect(() => {
         if (!currentUser || (!currentUser.roles.includes("ROLE_ADMIN"))) {
@@ -25,7 +21,7 @@ export default function UnconfirmedJobAdvertisementsList() {
         } else {
             jobAdvertisementService.getUnconfirmedJobAdvertisements().then((result) => setUnconfirmedJobAdvertisements(result.data.data))
         }
-    }, [currentUser.id])
+    }, [currentUser.id, unconfirmedJobAdvertisements])
 
 return (
         <div>
@@ -57,9 +53,7 @@ return (
                         <TableCell>{unconfirmedJobAdvertisement.workingType.workingTypeName}</TableCell>
                         <TableCell>{unconfirmedJobAdvertisement.openPositionAmount}</TableCell>
                         <TableCell>{unconfirmedJobAdvertisement.lastApplicationDate}</TableCell>
-                        <TableCell><ConfirmJobAdvertisement id={unconfirmedJobAdvertisement.id} /></TableCell>
-                        {/*<TableCell><ConfirmJobAdvertisement handleConfirm={handleConfirm} id={unconfirmedJobAdvertisement.id} /></TableCell>*/}
-                        {/*<TableCell><Button primary text="Confirm" onClick={() => handleOnClickConfirm()} id={unconfirmedJobAdvertisement.id}  /></TableCell>*/}
+                        <TableCell><ConfirmJobAdvertisement jobAdvertisementId={unconfirmedJobAdvertisement.id} employeeId={employeeId} /></TableCell>
                     </TableRow>
                 ))
             }

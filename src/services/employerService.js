@@ -34,6 +34,7 @@ export default class EmployerService {
 
     setEmployerEmployeeConfirmedById(employerId, employeeId) {
         //alert("axios'tayiz, employerId : " + employerId + JSON.stringify(authHeader()));
+        //axios.GET mapping yapýlacak yoksa Authorization error veriyor backend
         return axios.get(`http://localhost:8080/api/verifications/employeeConfirmEmployer?employerId=${employerId}&employeeId=${employeeId}`,
             { headers: authHeader(), });
     }

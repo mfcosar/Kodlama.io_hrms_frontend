@@ -12,12 +12,14 @@ export default class JobAdvertisementService {
     }
 
      getUnconfirmedJobAdvertisements() {
-        return axios.get("http://localhost:8080/api/jobAdvertisements/getallunconfirmed");
+         return axios.get("http://localhost:8080/api/jobAdvertisements/getallunconfirmed", { headers: authHeader(), });
     }
 
-    setJobAdvertisementConfirmedById(id) {
-        return axios.post("http://localhost:8080/api/jobAdvertisements/confirmbyid?jobAdvertisementId=" + id)
-            .then(response => console.log(response.data.message));
+    setJobAdvertisementConfirmedById(jobAdvertisementId, employeeId) {
+        //axios.GET mapping yapýlacak yoksa Authorization error veriyor backend
+
+        return axios.get(`http://localhost:8080/api/verifications/employeeconfirmjobadvertisement?jobAdvertisementId=${jobAdvertisementId}&employeeId=${employeeId}`, { headers: authHeader(), });
+            //.then(response => console.log(response.data.message));
     }
 
     addJobAdvertisement(jobAdvertisement){

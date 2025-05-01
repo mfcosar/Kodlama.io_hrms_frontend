@@ -55,7 +55,7 @@ export default function Dashboard() {
                         <Route path="/jobAdvertisement/update/:id" component={UpdateAdvertisement} />
                         <Route path="/jobAdvertisement/activate/:id" component={ActivateAdvertisement} />
                         <Route path="/jobAdvertisements/:id" component={JobAdvertisementDetail} />
-                        <Route path="/unconfirmedjobadvertisements/" component={UnconfirmedJobAdvertisementsList} />
+                        
                         <Route path="/city/add" component={CityAdd} />
                         <Route path="/job/add" component={JobAdd} />
                         <Route path="/candidate/register" component={RegisterCandidate} />
@@ -74,6 +74,7 @@ export default function Dashboard() {
                         <Route path="/admin/register" component={RegisterEmployee} />
                         <Route path="/admin/profile/:employeeId" component={AdminProfile} />
                         <Route path="/admin/unconfirmedemployers/:employeeId" component={UnconfirmedEmployers} />
+                        <Route path="/admin/unconfirmedjobadvertisements/:employeeId" component={UnconfirmedJobAdvertisementsList} />
                         <Route path="/admin" component={BoardAdmin} />
                         <Route path="/candidate" component={BoardCandidate} />
                         <Route path="/employer" component={BoardEmployer} />
